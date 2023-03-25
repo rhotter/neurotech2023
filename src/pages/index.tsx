@@ -1,11 +1,33 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { useEffect, useRef } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  // play video on scroll
+  const videoRef = useRef(null);
+  useEffect(() => {
+    // window.requestAnimationFrame(scrollPlay);
+    setInterval(function () {
+      let offset = 0;
+      if (videoRef.current) {
+        videoRef.current.currentTime = offset + window.pageYOffset / 1000;
+      }
+    }, 40);
+  }, [videoRef]);
+  // function scrollPlay() {
+  //   // let frameNumber = 0, // start video at frame 0
+  //   // lower numbers = faster playback
+  //   let playbackConstant = 300;
+  //   var frameNumber = window.pageYOffset / playbackConstant;
+  //   // console.log(videoRef.current, frameNumber);
+  //   videoRef.current.currentTime = frameNumber;
+  //   window.requestAnimationFrame(scrollPlay);
+  // }
+
   return (
     <>
       <Head>
@@ -15,47 +37,48 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
+        <div className={styles.description}></div>
+        <div style={{ position: "fixed" }}>
+          <video
+            id="video1"
+            width="100%"
+            height="100%"
+            // autoPlay
+            muted
+            ref={videoRef}
+            preload="preload"
+          >
+            <source
+              // src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              // src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+              // src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
+              src="/neuron.mp4"
+              type="video/mp4"
+            />
+            {/* <source src="mov_bbb.ogg" type="video/ogg" /> */}
+            Your browser does not support HTML video.
+          </video>
         </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
+        <div style={{ overflow: "auto", width: "100%" }}>
+          {/* <div style={{ width: "2000px" }}>hihihihii</div> */}
+          <div className={styles.center}>
             <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
+              className={styles.logo}
+              src="/next.svg"
+              alt="Next.js Logo"
+              width={180}
+              height={37}
               priority
             />
+            <div className={styles.thirteen}>
+              <Image
+                src="/thirteen.svg"
+                alt="13"
+                width={40}
+                height={31}
+                priority
+              />
+            </div>
           </div>
         </div>
 
@@ -119,5 +142,5 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
 }
