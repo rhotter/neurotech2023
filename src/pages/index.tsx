@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   // play video on scroll
-  const videoRef = useRef(null);
+  const videoRef = useRef<any>(null);
   useEffect(() => {
     // window.requestAnimationFrame(scrollPlay);
     setInterval(function () {
